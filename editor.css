@@ -1,0 +1,97 @@
+:root {
+    --white: #ffffff;
+    --yriel-yellow: #ffdd59;
+    --green-teal: #05c46b;
+    --good-night: #485460;
+    --black-pearl: #1e272e;
+}
+
+* {
+    font-family: 'Bebas Neue', cursive;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--green-teal);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+h1 {
+    margin: 40px 0 40px 0;
+    padding: 0;
+    color: var(--black-pearl);
+}
+
+a {
+    text-decoration: none;
+    color: var(--black-pearl);
+}
+
+a::before {
+    content: "•";
+    display: inline-block;
+}
+
+a::after {
+    content: "•";
+    display: inline-block;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+canvas {
+    width: 95%;
+    height: 55vh;
+    background-color: var(--white);
+    border: 3px solid var(--good-night);
+    margin-bottom: 10px;
+}
+
+p {
+    color: var(--black-pearl);
+    font-size: 26px;
+}
+
+button {
+    color: var(--black-pearl);
+    font-size: 22px;
+    width: 50px;
+    height: 50px;
+    background-color: var(--yriel-yellow);
+    border: 3px solid var(--good-night);
+}
+
+button:active {
+    color: var(--yriel-yellow);
+    border-color: var(--yriel-yellow);
+    background-color: var(--good-night);
+}
+
+.btn-style {
+    margin-bottom: 40px;
+}
+
+.btn-style:focus {
+    color: var(--yriel-yellow);
+    border-color: var(--yriel-yellow);
+    background-color: var(--good-night);
+}
+
+input {
+    width: 90%;
+    background: none;
+    border: none;
+}
+
+input[type="color"] {
+    height: 50px;
+}
