@@ -18,20 +18,22 @@
     <main>
         <canvas></canvas>
 
-        <button>&lt;-</button>
+        <button id="btn-erase">&lt;-</button>
 
         <p>Grubość</p>
-        <input type="range" min="1" max="100" value="50">
+        <input type="range" min="1" max="10" value="5" id="slidebar">
 
         <p>Kolor</p>
-        <input type="color" value="#ffdd59">
+        <input type="color" value="#ffdd59" id="color-picker">
 
         <p>Styl</p>
         <div class="button-box">
-            <button class="btn-style">-</button>
-            <button class="btn-style">o</button>
-            <button class="btn-style">~</button>
+            <button class="btn-style" id="btn-line">-</button>
+            <button class="btn-style" id="btn-circle">o</button>
+            <button class="btn-style" id="btn-wave">~</button>
         </div>
     </main>
+
+    <script src="editor.js"></script>
 </body>
 </html>
