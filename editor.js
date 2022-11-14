@@ -8,21 +8,17 @@ const slidebar = document.getElementById("slidebar");
 const colorPicker = document.getElementById("color-picker");
 const btnLine = document.getElementById("btn-line");
 const btnCircle = document.getElementById("btn-circle");
-const btnWave = document.getElementById("btn-wave");
+const btnFree = document.getElementById("btn-wave");
 
 let mode = "";
+let touches = [];
 
 
 function start(e) {
     e.preventDefault();
 
     const touch = e.touches[0];
-    const color = colorPicker.value;
-    const weight = slidebar.value;
-
-    ctx.beginPath();
-    ctx.strokeStyle = color;
-    ctx.lineWidth = weight;
+    touches.push(touch);
 
     switch (mode) {
         case "LINE":
@@ -32,45 +28,12 @@ function start(e) {
             break;
 
         case "FREE":
-            ctx.moveTo(touch.clientX - canvas.getBoundingClientRect().left, touch.clientY - canvas.getBoundingClientRect().top);
-            break;
+            const pos = calculatePosition(touch);
 
-        default:
-            break;
-    }
-}
-
-function end(e) {
-    e.preventDefault();
-
-    switch (mode) {
-        case "LINE":
-            break;
-
-        case "CIRCLE":
-            break;
-
-        case "FREE":
-            break;
-
-        default:
-            break;
-    }
-
-    ctx.closePath();
-}
-
-function cancel(e) {
-    e.preventDefault();
-
-    switch (mode) {
-        case "LINE":
-            break;
-
-        case "CIRCLE":
-            break;
-
-        case "FREE":
+            ctx.beginPath();
+            ctx.lineWidth = slidebar.value;
+            ctx.strokeStyle = colorPicker.value;
+            ctx.moveTo(pos.x, pos.y);
             break;
 
         default:
@@ -82,6 +45,7 @@ function move(e) {
     e.preventDefault();
 
     const touch = e.touches[0];
+    touches.push(touch);
 
     switch (mode) {
         case "LINE":
@@ -91,9 +55,10 @@ function move(e) {
             break;
 
         case "FREE":
-            ctx.lineTo(touch.clientX - canvas.getBoundingClientRect().left, touch.clientY - canvas.getBoundingClientRect().top);
-            ctx.stroke();
+            const pos = calculatePosition(touch);
 
+            ctx.lineTo(pos.x, pos.y);
+            ctx.stroke();
             break;
 
         default:
@@ -101,6 +66,59 @@ function move(e) {
     }
 }
 
+function end(e) {
+    e.preventDefault();
+
+    const startPos = calculatePosition(touches[0]);
+    const endPos = calculatePosition(touches[touches.length - 1]);
+
+    switch (mode) {
+        case "LINE":
+            ctx.beginPath();
+            ctx.lineWidth = slidebar.value;
+            ctx.strokeStyle = colorPicker.value;
+            ctx.moveTo(startPos.x, startPos.y);
+            ctx.lineTo(endPos.x, endPos.y);
+            ctx.stroke();
+            ctx.closePath();
+            break;
+
+        case "CIRCLE":
+            x = (startPos.x + endPos.x) / 2;
+            y = (startPos.y + endPos.y) / 2;
+            r = Math.sqrt(Math.pow(x - startPos.x, 2) + Math.pow(y - startPos.y, 2)) / 2;
+
+            ctx.beginPath();
+            ctx.lineWidth = slidebar.value;
+            ctx.strokeStyle = colorPicker.value;
+            ctx.arc(x, y, r, 0, 2 * Math.PI);
+            ctx.stroke();
+            ctx.closePath();
+            break;
+
+        case "FREE":
+            ctx.closePath();
+            break;
+
+        default:
+            break;
+    }
+
+    clearTouches();
+}
+
+function calculatePosition(o) {
+    return {x: o.clientX - canvas.getBoundingClientRect().left, y: o.clientY - canvas.getBoundingClientRect().top};
+}
+
+function clearTouches() {
+    touches = [];
+}
+
+
+btnErase.addEventListener("click", () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+});
 
 btnLine.addEventListener("click", () => {
     mode = "LINE";
@@ -110,11 +128,10 @@ btnCircle.addEventListener("click", () => {
     mode = "CIRCLE";
 });
 
-btnWave.addEventListener("click", () => {
+btnFree.addEventListener("click", () => {
     mode = "FREE";
 });
 
 canvas.addEventListener("touchstart", start);
-canvas.addEventListener("touchend", end);
-canvas.addEventListener("touchcancel", cancel);
 canvas.addEventListener("touchmove", move);
+canvas.addEventListener("touchend", end);

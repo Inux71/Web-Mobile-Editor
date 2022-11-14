@@ -58,7 +58,8 @@ canvas {
 
 p {
     color: var(--black-pearl);
-    font-size: 26px;
+    font-size: 22px;
+    margin: 0;
 }
 
 button {
@@ -74,10 +75,6 @@ button:active {
     color: var(--yriel-yellow);
     border-color: var(--yriel-yellow);
     background-color: var(--good-night);
-}
-
-.btn-style {
-    margin-bottom: 40px;
 }
 
 .btn-style:focus {
