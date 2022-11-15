@@ -8,6 +8,7 @@
 
 * {
     font-family: 'Bebas Neue', cursive;
+    box-sizing: border-box;
 }
 
 body {
@@ -46,14 +47,23 @@ main {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    position: relative;
 }
 
 canvas {
     width: 95%;
     height: 55vh;
-    background-color: var(--white);
     border: 3px solid var(--good-night);
     margin-bottom: 10px;
+}
+
+.main-canvas {
+    background-color: var(--white);
+}
+
+.sub-canvas {
+    position: absolute;
+    background-color: transparent;
 }
 
 p {
