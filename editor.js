@@ -28,17 +28,17 @@ function subStart(e) {
     e.preventDefault();
 
     const touch = e.touches[0];
+    const pos = calculatePosition(touch);
 
     switch (mode) {
         case "LINE":
+            touches.push(pos);
             break;
 
         case "CIRCLE":
             break;
 
         case "FREE":
-            const pos = calculatePosition(touch);
-
             subCtx.beginPath();
             subCtx.lineWidth = slidebar.value;
             subCtx.strokeStyle = colorPicker.value;
@@ -54,16 +54,25 @@ function subMove(e) {
     e.preventDefault();
 
     const touch = e.touches[0];
+    const pos = calculatePosition(touch);
 
     switch (mode) {
         case "LINE":
+            if (touches.length > 1) {
+                touches.pop();
+                touches.push(pos);
+
+            } else {
+                touches.push(pos);
+            }
+
+            drawLine();
             break;
 
         case "CIRCLE":
             break;
 
         case "FREE":
-            const pos = calculatePosition(touch);
             touches.push(pos);
 
             subCtx.lineTo(pos.x, pos.y);
@@ -80,16 +89,17 @@ function subEnd(e) {
 
     switch (mode) {
         case "LINE":
+            subCtx.closePath();
             break;
 
         case "CIRCLE":
             break;
 
         case "FREE":
+            subCtx.closePath();
             break;
 
         default:
-            subCtx.closePath();
             break;
     }
 
@@ -109,6 +119,10 @@ function calculatePosition(o) {
 }
 
 function redrawToMainCanvas() {
+    if (mode === "") {
+        return;
+    }
+    
     subCtx.clearRect(0, 0, subCanvas.width, subCanvas.height);
 
     mainCtx.beginPath();
@@ -150,6 +164,17 @@ function reDrawMainCanvas() {
         mainCtx.stroke();
         mainCtx.closePath();
     }
+}
+
+function drawLine() {
+    subCtx.clearRect(0, 0, subCanvas.width, subCanvas.height);
+    subCtx.beginPath();
+    subCtx.lineWidth = slidebar.value;
+    subCtx.strokeStyle = colorPicker.value;
+    subCtx.moveTo(touches[0].x, touches[0].y);
+    subCtx.lineTo(touches[1].x, touches[1].y);
+    subCtx.stroke();
+    subCtx.closePath();
 }
 
 
