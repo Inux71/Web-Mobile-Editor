@@ -97,22 +97,7 @@ function subMove(e) {
 function subEnd(e) {
     e.preventDefault();
 
-    switch (mode) {
-        case "LINE":
-            subCtx.closePath();
-            break;
-
-        case "CIRCLE":
-            subCtx.closePath();
-            break;
-
-        case "FREE":
-            subCtx.closePath();
-            break;
-
-        default:
-            break;
-    }
+    subCtx.closePath();
 
     subHistory = {
         touches: touches, 

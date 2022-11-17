@@ -51,7 +51,7 @@ main {
 }
 
 canvas {
-    width: 95%;
+    width: 380px;
     height: 55vh;
     border: 3px solid var(--good-night);
     margin-bottom: 10px;
