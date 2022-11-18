@@ -23,9 +23,6 @@ let mainHistory = [];
 let subHistory = {};
 let touches = [];
 
-const url = window.location.href;
-const isPublic = url.includes("public");
-
 
 function subStart(e) {
     e.preventDefault();
@@ -115,10 +112,6 @@ function subEnd(e) {
         redrawToMainCanvas();
 
         mainHistory.push(subHistory);
-
-        if (isPublic) {
-            POSTData(mainHistory);
-        }
     }
 }
 
@@ -244,10 +237,6 @@ function removeLastElement() {
 
     if (mainHistory.length > 0) {
         mainHistory.pop();
-
-        if (isPublic) {
-            POSTData(mainHistory);
-        }
     }
 }
 
@@ -273,15 +262,4 @@ subCanvas.addEventListener("touchstart", subStart);
 subCanvas.addEventListener("touchmove", subMove);
 subCanvas.addEventListener("touchend", subEnd);
 
-document.addEventListener("DOMContentLoaded", () => {
-    if (!isPublic) {
-        return;
-    }
-
-    setInterval(() => {
-        GETData((data) => {
-            mainHistory = data;
-            reDrawMainCanvas();
-        });
-    }, 1000);
-});
+reDrawMainCanvas();

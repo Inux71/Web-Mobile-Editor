@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edytor Online</title>
+
+    <link rel="stylesheet" href="editor.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1><a href="./index.html">Edytor Online</a></h1>
+    </header>
+
+    <main>
+        <canvas class="main-canvas" id="main-canvas"></canvas>
+        <canvas class="sub-canvas" id="sub-canvas"></canvas>
+
+        <button id="btn-erase">&lt;-</button>
+
+        <p>Grubość</p>
+        <input type="range" min="1" max="10" value="5" id="slidebar">
+
+        <p>Kolor</p>
+        <input type="color" value="#ffdd59" id="color-picker">
+
+        <p>Styl</p>
+        <div class="button-box">
+            <button class="btn-style" id="btn-line">-</button>
+            <button class="btn-style" id="btn-circle">o</button>
+            <button class="btn-style" id="btn-free">~</button>
+        </div>
+    </main>
+
+    <script src="editor.js"></script>
+    <script src="connector.js"></script>
+</body>
+</html>
