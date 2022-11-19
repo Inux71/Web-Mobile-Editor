@@ -3,7 +3,11 @@
         $data = file_get_contents("php://input");
         $file = fopen("data/data.json", "w");
 
-        fwrite($file, $data);
+        if (flock($file, LOCK_EX)) {
+            fwrite($file, $data);
+            flock($file, LOCK_UN);
+        }
+
         fclose($file);
 
     } elseif ($_SERVER["REQUEST_METHOD"] === "GET") {
